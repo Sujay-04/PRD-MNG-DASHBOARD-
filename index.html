@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Management Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="data:image/png;base64,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" type="image/x-icon">
+</head>
+<body>
+    <main>
+        <nav></nav>
+        <section class="AllElem">
+            <div class="todo  elem" id="0">
+                <h2>To Do list</h2>
+            </div>
+            <div class="planner elem" id="1">
+                <h2>Daily Planner</h2>
+            </div>
+            <div class="motivation elem" id="2">
+                <h2>Motivation</h2>
+            </div>
+            <div class="timer elem" id="3">
+                <h2>Pomodoro Timer</h2>
+            </div>
+            <div class="goals elem" id="4">
+                <h2>Daliy Goals</h2>
+            </div>
+        </section>
+        <section class="FullElem todo-fullpage">
+            <button class="back" id="0"><i class="ri-close-line"></i></button>
+            <h2>Your's Personalised To Do List!</h2>
+            <div class="todo-container">
+                <div class="addTask">
+                    <form >
+                        <input type="text" placeholder="Enter Task">
+                        <textarea name="" id="" placeholder="Enter Details"></textarea>
+                        <button >Add Task</button>
+                    </form>
+                </div>
+                <div class="allTask">
+                    <!-- <div class="task">
+                        <h3></h3>
+                        <button id="Btn-Tsk">Mark as Completed</button>
+                    </div> -->
+                    
+                </div>
+            </div>
+        </section>
+        <section class="FullElem planner-fullpage">
+            <button class="back" id="1"><i class="ri-close-line"></i></button>
+            <h2>Daily Planner</h2>
+        </section>
+        <section class="FullElem motivation-fullpage">
+            <button class="back" id="2"><i class="ri-close-line"></i></button>
+            <h2>Motivation</h2>
+        </section>
+        <section class="FullElem timer-fullpage">
+            <button class="back" id="3"><i class="ri-close-line"></i></button>
+            <h2>Pomodoro Timer</h2>
+        </section>
+        <section class="FullElem goals-fullpage">
+            <button class="back" id="4"><i class="ri-close-line"></i></button>
+            <h2>Daily goals</h2>
+        </section>
+    </main>
+    <script src="./script.js"></script>
+</body>
+</html>
