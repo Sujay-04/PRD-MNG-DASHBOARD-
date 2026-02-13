@@ -18,40 +18,125 @@ backBtn.forEach((back)=>{
 }
 openPage()
 
-function todoLogic(){
-    
-var todoForm = document.querySelector('.addTask form');
-var todoInput =document.querySelector('.addTask form input');
-var todoDetails = document.querySelector('.addTask form textarea');
-var newTask = document.querySelector('.allTask');
+function todoLogic() {
+    // Select Elements
+    var todoForm = document.querySelector('.addTask form');
+    var todoInput = document.querySelector('.addTask form input');
+    var taskContainer = document.querySelector('.allTask');
 
-todoForm.addEventListener('submit',(e)=>{
-    e.preventDefault();
-   if (todoInput.value === "") {
-        alert("Please enter a task!");
-        return; 
+    // --- SAVE FUNCTION ---
+    function saveTasks() {
+        var currentTasks = [];
+        // Only grab the text from H3s to save
+        var allTaskTitles = taskContainer.querySelectorAll('.task h3');
+        allTaskTitles.forEach(title => {
+            currentTasks.push(title.innerText);
+        });
+        localStorage.setItem("myTodoList", JSON.stringify(currentTasks));
     }
-    var newDiv = document.createElement('div');
-    newDiv.classList.add('task');
-    newDiv.innerHTML = `
-    <h3>${todoInput.value}</h3>
-    <button>Mark as Completed</button>`;
-    newTask.appendChild(newDiv);
-    var newBtn = newDiv.querySelector('button');
-    var newtsk = newDiv.querySelector('h3');
-    newBtn.addEventListener('click', () => {
-        console.log("cd");
-        newBtn.innerHTML="Completed";
-        newBtn.style.backgroundColor="green";
-        newtsk.style.textDecoration="line-through";
-        setTimeout(() => {
-            newDiv.remove();
-        }, 2000);
+
+    // --- CREATE HTML FUNCTION ---
+    function createTaskHTML(text) {
+        // 1. Create Div
+        var newDiv = document.createElement('div');
+        newDiv.classList.add('task');
+        newDiv.innerHTML = `
+            <h3>${text}</h3>
+            <button type="button">Mark as Completed</button>
+        `;
         
+        // 2. Add to Container
+        taskContainer.appendChild(newDiv);
+
+        // 3. Add Button Logic
+        var btn = newDiv.querySelector('button');
+        var title = newDiv.querySelector('h3');
+
+        btn.addEventListener('click', () => {
+            // Visual Styles
+            btn.innerText = "Completed";
+            btn.style.backgroundColor = "green";
+            title.style.textDecoration = "line-through";
+            
+            // Delete Logic
+            setTimeout(() => {
+                newDiv.remove(); // Remove from screen
+                saveTasks();     // Update storage immediately
+            }, 2000);
+        });
+    }
+
+    // --- LOAD FUNCTION ---
+    function loadTasks() {
+        // STEP 1: WIPE THE LIST CLEAN (Fixes the "Random Increase" bug)
+        taskContainer.innerHTML = ""; 
+
+        // STEP 2: Load data
+        var savedData = localStorage.getItem("myTodoList");
+        if (savedData) {
+            var tasks = JSON.parse(savedData);
+            tasks.forEach(taskText => {
+                createTaskHTML(taskText);
+            });
+        }
+    }
+
+    // --- ADD TASK LISTENER ---
+    todoForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Stop page reload
+        
+        // Check if input is empty
+        if (todoInput.value.trim() === "") {
+            alert("Please enter a task!");
+            return;
+        }
+
+        // Create and Save
+        createTaskHTML(todoInput.value);
+        saveTasks();
+
+        // Clear Input
+        todoInput.value = "";
     });
-   
-    todoInput.value='';
-    todoDetails.value='';
-})
+
+    // Load tasks when code runs
+    loadTasks();
 }
-todoLogic()
+
+todoLogic();
+
+function dailyPlannerLogic(){
+    const today = new Date().toDateString();
+    const lastSavedDate = localStorage.getItem('plannerDate');
+    
+    var DayPlanData=JSON.parse(localStorage.getItem('DayPlanData'))|| {};
+    if (lastSavedDate !== today) {
+        // Yes! It's a new day. Clear the data.
+        localStorage.removeItem('DayPlanData');
+        localStorage.setItem('plannerDate', today); // Update to today
+    }
+
+    
+    var dayPlanner = document.querySelector(".day-planner");
+
+var hours = Array.from({length:18},(elem,idx)=>{
+    return `${6+idx}:00-${7+idx}:00`;})
+let plan='';
+hours.forEach((elem,idex)=>{
+    var SavedData= DayPlanData[idex]||'';
+    plan = plan + `<div class="day-planner-time">
+                    <p>${elem}</p>
+                    <input id="${idex}" type="text" placeholder="..." value="${SavedData}">
+                </div>`;
+})
+dayPlanner.innerHTML=plan;
+var dayPlannerInput = document.querySelectorAll(".day-planner input");
+dayPlannerInput.forEach((elem)=>{
+    elem.addEventListener('input',()=>{
+        DayPlanData[elem.id] = elem.value;
+        localStorage.setItem("DayPlanData",JSON.stringify(DayPlanData));
+    })
+})
+
+}
+dailyPlannerLogic();

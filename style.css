@@ -132,6 +132,7 @@ section.AllElem{
     top: 0;
     left: 0;
     z-index: 1000;
+    
 }
 .back{
     position: absolute;
@@ -302,5 +303,74 @@ section.AllElem{
     .todo-fullpage .todo-container .allTask {
         flex: 1; 
         overflow-y: auto; 
+    }
+}
+
+.strike {
+    text-decoration: line-through;
+    color: gray;
+  }
+
+.FullElem.planner-fullpage{
+    overflow-y: scroll;
+}
+.FullElem.planner-fullpage h2{
+    
+    font-size: 3rem;
+    font-family: bold;
+}
+.FullElem.planner-fullpage .day-planner{
+    background-color: var(--tri2);
+     /* height: 85%;  */
+     /* width: 100%;  */
+    margin: 2rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between ; */
+    gap: 2rem;
+    
+    
+    
+}
+.FullElem.planner-fullpage .day-planner-time{
+    background-color: var(--pri);
+    border-radius:1rem ;
+    padding: 1rem;
+    color: var(--tri1);
+    display: flex;
+    align-items: center;
+   
+    /* width: 45%; */
+    position: relative;
+
+    margin-bottom: 2rem;
+}
+.FullElem.planner-fullpage .day-planner-time p{
+    position: absolute;
+    top :7%;
+    
+    left: 1%;
+}
+.FullElem.planner-fullpage .day-planner-time input{
+    padding: 0.5rem;
+    border: none;
+    background: var(--pri);
+    font-size: 1.2rem;
+    color: var(--tri2);
+    width: 100%;
+
+}
+.FullElem.planner-fullpage .day-planner-time input:focus {
+    outline: none;
+}
+
+
+@media (max-width: 768px) {
+    .FullElem.planner-fullpage .day-planner {
+        grid-template-columns: 1fr; 
     }
 }
