@@ -140,3 +140,38 @@ dayPlannerInput.forEach((elem)=>{
 
 }
 dailyPlannerLogic();
+
+function motivationLogic() {
+   
+    var quoteText = document.querySelector('.quote-text');
+    var quoteAuthor = document.querySelector('.quote-author');
+    var MotivationCard = document.querySelector('.motivation');
+    var Moti = document.querySelector(".motivation-fullpage");
+    async function getQuote() {
+       
+        quoteText.innerText = "Finding wisdom...";
+        quoteAuthor.innerText = "";
+
+        try {
+           
+            var response = await fetch('https://dummyjson.com/quotes/random');
+            var data = await response.json();
+
+            quoteText.innerText = `"${data.quote}"`;
+            quoteAuthor.innerText = `- ${data.author}`;
+        } catch (error) {
+            quoteText.innerText = "The only way to do great work is to love what you do.";
+            quoteAuthor.innerText = "- Steve Jobs";
+        }
+    }
+    if (MotivationCard){
+        MotivationCard.addEventListener('click',()=>{
+            getQuote();
+            Moti.style.display="flex";
+        })
+    }
+   
+}
+
+
+motivationLogic();

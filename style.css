@@ -368,6 +368,42 @@ section.AllElem{
     outline: none;
 }
 
+.motivation-fullpage{
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.motivation-fullpage .motivation-container{
+    /* height: 25rem;
+    width: 30rem; */
+    background-color: var(--tri2);
+    color: var(--pri);
+    border-radius:2rem ;
+    overflow: hidden;
+    
+    
+}
+.motivation-container .outer{
+    padding: 2rem;
+    background-color: var(--tri1);
+    font-size: 2rem;
+    
+}
+.motivation-container .inner{
+    padding: 5rem;
+    font-size: 2rem;
+    font-style: oblique;
+    position: relative;
+
+}
+.motivation-container .inner h3{
+    font-size: 1.3rem;
+    font-style: italic;
+    position: absolute;
+    bottom: 10%;
+    right: 5%;
+}
+
 
 @media (max-width: 768px) {
     .FullElem.planner-fullpage .day-planner {
