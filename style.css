@@ -403,7 +403,54 @@ section.AllElem{
     bottom: 5%;
     right: 5%;
 }
+.timer-fullpage>h2{
+    font-size: 3rem;
+}
+.timer-fullpage .pomo-timer{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 3rem;
+}
+.pomo-timer h1{
+    font-size: 2.5em;
+}
+.pomo-timer button{
+    padding: 1rem 2rem;
+    border-radius:1.5rem ;
+    border: none;
+    background-color: var(--tri2);
+    color: var(--pri);
+    font-size: 1rem;
+    box-shadow: 5px 5px 0px black;
+    
+}
 
+.pomo-timer button:hover {
+    cursor: pointer;
+     background-color: var(--tri1);  
+     transform: scale(1);          
+      box-shadow: 5px 5px 0px black;
+}
+
+.pomo-timer button:active {
+    transform: scale(0.95); 
+    transition: 0.1s;    
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);  
+}
+.session{
+    font-size: 2rem;
+    background-color: yellow;
+    position: absolute;
+    top: 25%;
+    left :50%;
+    transform: translate(-50%,0);
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    
+
+}
 
 @media (max-width: 768px) {
     .FullElem.planner-fullpage .day-planner {

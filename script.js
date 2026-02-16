@@ -173,3 +173,76 @@ function motivationLogic() {
    
 }
 motivationLogic();
+
+function pomoTimerLogic(){
+    
+let timer = document.querySelector('.pomo-timer h1');
+let startBtn = document.querySelector('.start-timer');
+let pauseBtn = document.querySelector('.pause-timer');
+let restartBtn = document.querySelector('.restart-timer');
+let session = document.querySelector('.session');
+let workSession = true
+let timerInterval =null;
+
+let totalSeconds= 25*60;
+
+function updateTime(){
+    
+    let minutes = Math.floor(totalSeconds/60);
+    let seconds = totalSeconds%60;   
+    timer.innerHTML=`${String(minutes).padStart('2','0')}:${String(seconds).padStart('2','0')}`;
+    
+    
+}
+function startTimer(){
+    clearInterval(timerInterval);
+    if(workSession){
+       
+         timerInterval= setInterval( () => {
+        if(totalSeconds>0){
+            totalSeconds--
+        updateTime();
+        }
+        else{
+            workSession=false;
+            clearInterval(timerInterval);
+            timer.innerHTML=`05:00`
+             totalSeconds= 5*60;
+             session.style.backgroundColor=  "red"
+             session.style.color=  "var(--pri)"
+             session.innerHTML="Take a Break!"     
+            }
+    }, 1000);
+    }
+    else{
+        totalSeconds= 5*60;
+         timerInterval= setInterval(() => {
+        if(totalSeconds>0){
+            totalSeconds--
+        updateTime()
+        }
+        else{
+             totalSeconds= 25*60;
+            clearInterval(timerInterval);
+            workSession=true;
+            timer.innerHTML=`25:00`
+            session.style.backgroundColor=  "green" 
+            session.innerHTML="Work Session"
+        }
+    }, 1000);
+    }
+}
+function pauseTimer(){
+    clearInterval(timerInterval);
+}
+function restarttimer(){
+    totalSeconds=25*60;
+    clearInterval(timerInterval);
+    updateTime();
+
+}
+startBtn.addEventListener('click', startTimer);
+pauseBtn.addEventListener('click',pauseTimer);
+restartBtn.addEventListener('click',restarttimer)
+}
+pomoTimerLogic()
