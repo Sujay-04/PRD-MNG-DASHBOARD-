@@ -443,7 +443,7 @@ section.AllElem{
     font-size: 2rem;
     background-color: yellow;
     position: absolute;
-    top: 20%;
+    top: 25%;
     left :50%;
     transform: translate(-50%,0);
     padding: 1rem 2rem;
@@ -455,5 +455,10 @@ section.AllElem{
 @media (max-width: 768px) {
     .FullElem.planner-fullpage .day-planner {
         grid-template-columns: 1fr; 
+    }
+    .session{
+        top:18%;
+        font-size: 1rem;
+        padding: 1rem;
     }
 }
