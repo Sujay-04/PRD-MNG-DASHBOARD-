@@ -443,7 +443,7 @@ section.AllElem{
     font-size: 2rem;
     background-color: yellow;
     position: absolute;
-    top: 25%;
+    top: 20%;
     left :50%;
     transform: translate(-50%,0);
     padding: 1rem 2rem;
