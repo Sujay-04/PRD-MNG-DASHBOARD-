@@ -134,6 +134,40 @@ section.AllElem{
     z-index: 1000;
     
 }
+.AllElem header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5rem 2rem;
+    border-radius: 1rem;
+    background-image: url(./2207_w026_n002_2169b_p1_2169.jpg);
+    background-position: center;
+    background-size: cover;
+    color: var(--pri);
+    
+}
+.header1 h1{
+    font-size: 4rem;
+    font-weight: 500;
+    opacity: 0.7;
+}
+.header1 h2{
+    font-size: 2em;
+    font-weight: 500;
+}
+.header2 h2{
+    font-size: 2.5rem;
+}
+.header2 h3{
+    font-size: 3rem;
+    font-weight: 400;
+}
+.header2 h4{
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.8;
+}
 .back{
     position: absolute;
     right: 5%;
@@ -303,6 +337,9 @@ section.AllElem{
     .todo-fullpage .todo-container .allTask {
         flex: 1; 
         overflow-y: auto; 
+    }
+    header{
+        flex-direction: column;
     }
 }
 

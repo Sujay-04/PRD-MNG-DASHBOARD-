@@ -246,3 +246,14 @@ pauseBtn.addEventListener('click',pauseTimer);
 restartBtn.addEventListener('click',restarttimer)
 }
 pomoTimerLogic()
+
+let ApiKey="3666ad366a2c4308a03114818261602";
+let city = 'Bhopal';
+let data =null;
+async function Weather(){
+    let response= await fetch(`http://api.weatherapi.com/v1/current.json?key=${ApiKey}&q=${city}`);
+     data = await response.json();
+     console.log(data)
+
+}
+Weather()
