@@ -247,13 +247,83 @@ restartBtn.addEventListener('click',restarttimer)
 }
 pomoTimerLogic()
 
+function weatherLogic(){
+    
+let Cityinput= document.querySelector("#city-input");
+let dateElem = document.querySelector('#date');
+let cityElem = document.querySelector('#city');
+let daytimeElem = document.querySelector('#day-time');
+let conditionElem =document.querySelector('#condition');
+let tempElem = document.querySelector('#temp');
+let preElem = document.querySelector('#precip');
+let humidityElem = document.querySelector('#humidity');
+let windElem = document.querySelector('#wind');
 let ApiKey="3666ad366a2c4308a03114818261602";
-let city = 'Bhopal';
+//let city = 'Bhopal';
 let data =null;
-async function Weather(){
-    let response= await fetch(`http://api.weatherapi.com/v1/current.json?key=${ApiKey}&q=${city}`);
-     data = await response.json();
-     console.log(data)
+let clockInterval;
 
+async function Weather(CityName){
+    let response= await fetch(`http://api.weatherapi.com/v1/current.json?key=${ApiKey}&q=${CityName}`);
+    data = await response.json();
+    
+    cityElem.innerHTML= `${data.location.name}, ${data.location.region}, ${data.location.country}`;
+    windElem.innerHTML =`Wind: ${data.current.wind_kph}Km/h `;
+    tempElem.innerHTML =`Temp: ${data.current.temp_c}°C`;
+    conditionElem.innerHTML=`${data.current.condition.text}`;
+    humidityElem.innerHTML=`Humidity: ${data.current.humidity}%`;
+    preElem.innerHTML=`Precipitation: ${data.current.precip_in}`
+    
+    // const localTime = new Date(data.location.localtime);
+            
+    // const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+    // dateElem.innerText = localTime.toLocaleDateString('en-GB', dateOptions);
+    // const dayName = localTime.toLocaleDateString('en-US', { weekday: 'long' });
+    // const timePart = localTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    // daytimeElem.innerText = `${dayName}, ${timePart}`;
+    if (clockInterval) clearInterval(clockInterval);
+    const cityTimeZone = data.location.tz_id;
+     async function updateClockWether() {
+                const now = new Date();
+                
+                // Date Format (with TimeZone)
+                const dateOptions = { 
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric', 
+                    timeZone: cityTimeZone 
+                };
+                dateElem.innerText = now.toLocaleDateString('en-GB', dateOptions);
+
+                // Time Format (with TimeZone)
+                const dayName = now.toLocaleDateString('en-US', { weekday: 'long', timeZone: cityTimeZone });
+                const timePart = now.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: 'numeric', 
+                    second: 'numeric',
+                    hour12: true, 
+                    timeZone: cityTimeZone 
+                });
+                
+                daytimeElem.innerText = `${dayName}, ${timePart}`;
+            }
+
+            // Step D: Abhi turant run karo, phir har second repeat karo
+            updateClockWether(); 
+            clockInterval = setInterval(updateClockWether, 1000);
 }
-Weather()
+
+
+if (Cityinput){
+    Cityinput.addEventListener('keypress',(e)=>{
+    if (e.key === 'Enter' && Cityinput.value.trim() !== "") {
+                Weather(Cityinput.value);
+                Cityinput.value = ""; // Input clear
+            }
+})}
+
+
+Weather("New Delhi")
+}
+weatherLogic();
+
