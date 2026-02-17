@@ -264,7 +264,7 @@ let data =null;
 let clockInterval;
 
 async function Weather(CityName){
-    let response= await fetch(`http://api.weatherapi.com/v1/current.json?key=${ApiKey}&q=${CityName}`);
+    let response= await fetch(`https://api.weatherapi.com/v1/current.json?key=${ApiKey}&q=${CityName}`);
     data = await response.json();
     
     cityElem.innerHTML= `${data.location.name}, ${data.location.region}, ${data.location.country}`;
