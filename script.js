@@ -259,12 +259,14 @@ let preElem = document.querySelector('#precip');
 let humidityElem = document.querySelector('#humidity');
 let windElem = document.querySelector('#wind');
 let ApiKey="3666ad366a2c4308a03114818261602";
+
 //let city = 'Bhopal';
 let data =null;
 let clockInterval;
 
 async function Weather(CityName){
     let response= await fetch(`https://api.weatherapi.com/v1/current.json?key=${ApiKey}&q=${CityName}`);
+    
     data = await response.json();
     
     cityElem.innerHTML= `${data.location.name}, ${data.location.region}, ${data.location.country}`;
@@ -327,3 +329,32 @@ Weather("New Delhi")
 }
 weatherLogic();
 
+function NightMode(){
+    
+let ThemeBtn = document.querySelector('nav button');
+let NightBtn = document.querySelector('nav button i');
+let body = document.body;
+
+let currentTheme = localStorage.getItem('theme');
+if(currentTheme== "dark"){
+     body.classList.add('dark-theme');
+     NightBtn.classList.remove('ri-moon-fill');
+     NightBtn.classList.add('ri-sun-fill');
+}
+
+if(ThemeBtn){
+    ThemeBtn.addEventListener('click',()=>{
+    body.classList.toggle('dark-theme');
+    if(body.classList.contains('dark-theme')){
+         NightBtn.classList.replace("ri-moon-fill","ri-sun-fill");
+         localStorage.setItem('theme','dark');
+    }
+    else{
+        NightBtn.classList.replace("ri-sun-fill" , "ri-moon-fill");
+        localStorage.setItem('theme','light');
+    }
+})
+}
+}
+
+NightMode();
