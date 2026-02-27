@@ -288,8 +288,7 @@ async function Weather(CityName){
      async function updateClockWether() {
                 const now = new Date();
                 
-                // Date Format (with TimeZone)
-                const dateOptions = { 
+                    const dateOptions = { 
                     day: 'numeric', 
                     month: 'long', 
                     year: 'numeric', 
@@ -297,7 +296,6 @@ async function Weather(CityName){
                 };
                 dateElem.innerText = now.toLocaleDateString('en-GB', dateOptions);
 
-                // Time Format (with TimeZone)
                 const dayName = now.toLocaleDateString('en-US', { weekday: 'long', timeZone: cityTimeZone });
                 const timePart = now.toLocaleTimeString('en-US', { 
                     hour: 'numeric', 
@@ -310,7 +308,6 @@ async function Weather(CityName){
                 daytimeElem.innerText = `${dayName}, ${timePart}`;
             }
 
-            // Step D: Abhi turant run karo, phir har second repeat karo
             updateClockWether(); 
             clockInterval = setInterval(updateClockWether, 1000);
 }
@@ -358,3 +355,73 @@ if(ThemeBtn){
 }
 
 NightMode();
+
+// --- STICKY NOTES LOGIC ---
+function dailyGoalsLogic() {
+    const goalInput = document.getElementById('goal-input');
+    const addGoalBtn = document.getElementById('add-goal-btn');
+    const notesContainer = document.querySelector('.sticky-notes-container');
+
+    // Pastel colors for a realistic sticky note feel
+    const noteColors = ['#fdfd96', '#ffb7b2', '#c1e1c1', '#b5ead7', '#e2f0cb', '#ffdac1'];
+
+    function saveGoals() {
+        const notes = [];
+        document.querySelectorAll('.sticky-note p').forEach(p => {
+            notes.push(p.innerText);
+        });
+        localStorage.setItem('myDailyGoals', JSON.stringify(notes));
+    }
+
+    function createStickyNote(text) {
+        const note = document.createElement('div');
+        note.classList.add('sticky-note');
+
+        // Randomize color and rotation for messy look
+        const randomColor = noteColors[Math.floor(Math.random() * noteColors.length)];
+        const randomRotate = Math.floor(Math.random() * 12) - 6; // Random rotation between -6 and +6 degrees
+
+        note.style.backgroundColor = randomColor;
+        note.style.transform = `rotate(${randomRotate}deg)`;
+
+        note.innerHTML = `
+            <p>${text}</p>
+            <button class="delete-note" title="Mark as done"><i class="ri-check-line"></i></button>
+        `;
+
+        notesContainer.appendChild(note);
+
+        // Delete (Complete) Goal Logic
+        const deleteBtn = note.querySelector('.delete-note');
+        deleteBtn.addEventListener('click', () => {
+            note.style.transform = 'scale(0)'; // Shrink animation
+            setTimeout(() => {
+                note.remove();
+                saveGoals();
+            }, 300);
+        });
+    }
+
+    function loadGoals() {
+        notesContainer.innerHTML = '';
+        const savedGoals = JSON.parse(localStorage.getItem('myDailyGoals')) || [];
+        savedGoals.forEach(goal => createStickyNote(goal));
+    }
+
+    // Event Listeners
+    if (addGoalBtn) {
+        addGoalBtn.addEventListener('click', () => {
+            if (goalInput.value.trim() !== "") {
+                createStickyNote(goalInput.value);
+                saveGoals();
+                goalInput.value = ""; // Clear input
+            }
+        });
+    }
+
+    // Initialize
+    loadGoals();
+}
+
+// Run the function
+dailyGoalsLogic();
